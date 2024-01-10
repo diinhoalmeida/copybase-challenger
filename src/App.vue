@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-  <div class="bg-background w-[100vw] min-h-[100vh] px-10 pb-20">
+  <div class="bg-background w-[100vw] min-h-[100vh]">
     <router-view />
   </div>
 </template>
