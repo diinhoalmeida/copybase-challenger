@@ -23,7 +23,7 @@ export default {
 
       md: '800px',
 
-      lg: '1024px',
+      lg: '1088px',
 
       xl: '1280px',
 
