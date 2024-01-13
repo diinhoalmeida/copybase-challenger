@@ -1,7 +1,9 @@
 <template>
-  <HeaderPage />
+  <HeaderPage @toggleMenu="toggleMenu" />
   <section class="flex flex-row">
-    <aside class="lg:block hidden"><NavBar /></aside>
+    <aside>
+      <NavBar :showMenu="showMenu" @toggleMenu="toggleMenu" />
+    </aside>
     <main class="p-5 w-full bg-buttonColor">
       <section><router-view /></section>
     </main>
@@ -16,6 +18,16 @@ export default {
   components: {
     NavBar,
     HeaderPage
+  },
+  data() {
+    return {
+      showMenu: false
+    }
+  },
+  methods: {
+    toggleMenu() {
+      this.showMenu = !this.showMenu
+    }
   }
 }
 </script>
