@@ -66,6 +66,7 @@ export default {
         const response = await api.post('/sessions', formData)
 
         alert('Upload realizado')
+        location.reload()
       } catch (error) {
         alert('Erro no envio do arquivo para análise', error)
       }
