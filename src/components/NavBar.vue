@@ -96,8 +96,10 @@ export default {
   },
   methods: {
     toggleStyles(tab: any) {
-      this.toggleMenu()
       this.activeTab = tab
+      if (window.innerWidth <= 1088) {
+        this.toggleMenu()
+      }
     },
     toggleMenu() {
       this.$emit('toggleMenu')
