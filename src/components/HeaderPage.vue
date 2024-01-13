@@ -1,12 +1,19 @@
 <template>
   <header>
-    <div class="px-5 flex flex-row items-center justify-between py-5">
+    <div class="pl-5 pr-[60px] flex flex-row items-center justify-between py-5">
       <img src="../assets/icon-copybase.svg" alt="icon copybase" class="w-[250px]" />
+      <CIcon
+        :icon="cilHamburgerMenu"
+        width="24"
+        customClassName="icon"
+        class="text-titleColor block lg:hidden"
+        @click="toggleMenu"
+      />
     </div>
   </header>
 </template>
 <script lang="ts">
-import { cilUser, cilAccountLogout } from '@coreui/icons'
+import { cilHamburgerMenu } from '@coreui/icons'
 import { CIcon } from '@coreui/icons-vue'
 export default {
   name: 'HeaderPage',
@@ -15,8 +22,12 @@ export default {
   },
   data() {
     return {
-      cilUser,
-      cilAccountLogout
+      cilHamburgerMenu
+    }
+  },
+  methods: {
+    toggleMenu() {
+      this.$emit('toggleMenu')
     }
   }
 }
