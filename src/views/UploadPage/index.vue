@@ -62,7 +62,7 @@ export default {
         }
 
         const formData = new FormData()
-        formData.append('files', this.selectedFile)
+        formData.append('files', this.selectedFile, 'modelo-teste-full-stack.xlsx')
         const response = await api.post('/sessions', formData)
 
         alert('Upload realizado')
