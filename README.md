@@ -1,46 +1,62 @@
-# copybase-challenger
+# Documentação - Copybase Challenger
 
-This template should help get you started developing with Vue 3 in Vite.
+Bem-vindo à documentação do site do Copybase Challenger. Nesta documentação, você encontrará informações detalhadas sobre o funcionamento e recursos do website, bem como as tecnologias utilizadas no desenvolvimento.
 
-## Recommended IDE Setup
+## Visão Geral
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+O site de Copybase Challenger permite que os usuários enviem um documento de formato xlsx e então obtenha dados a partir dele.
 
-## Type Support for `.vue` Imports in TS
+### Funcionalidades Principais
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+1. **Upload de Arquivo:** O usuário pode enviar um arquivo de formato xlsx
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+2. **Dados de Status:** O usuário pode acessar a página de Status e Engajameto para poder verificar como estão os status
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+3. **Financeiro:** O usuário pode acessar a página de financeiro onde pode verificar o MRR;
 
-## Customize configuration
+## Tecnologias Utilizadas
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- Vue
+- Axios: Uma biblioteca para fazer requisições HTTP.
+- Eslint
+- Prettier
+- Vue ChartJs
+- Vue Router
 
-## Project Setup
+## Instalação
 
-```sh
+1. Clone o repositório em sua máquina local.
+2. Navegue até o diretório do projeto e instale as dependências usando npm ou yarn.
+
+```bash
 npm install
+# ou
+yarn install
 ```
 
-### Compile and Hot-Reload for Development
+3. Faça a instalação e rode o back end na porta 3333
 
-```sh
+4. Execute o servidor de desenvolvimento.
+
+```bash
 npm run dev
+# ou
+yarn dev
 ```
 
-### Type-Check, Compile and Minify for Production
+O site estará disponível em `http://localhost:5173`.
 
-```sh
-npm run build
-```
+## Contribuição
 
-### Lint with [ESLint](https://eslint.org/)
+Se encontrar algum problema ou tiver sugestões de melhoria, sinta-se à vontade para abrir uma issue ou enviar um pull request.
 
-```sh
-npm run lint
-```
+## Contato
+
+Para qualquer dúvida ou oportunidade de colaboração, você pode entrar em contato através dos seguintes canais:
+
+- E-mail: edifilho1409@outlook.com
+- LinkedIn: https://www.linkedin.com/in/edilson-almeida-2684a620a/
+- GitHub: https://github.com/diinhoalmeida
+- Portfolio: https://portfolio-project-chi-six.vercel.app/
+
+Obrigado por utilizar o site! Esperamos que você tenha uma experiência agradável e útil.
