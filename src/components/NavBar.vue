@@ -3,30 +3,50 @@
     <div class="px-5 w-max h-[100vh] flex flex-col pt-5 text-titleColor">
       <ul class="flex flex-col gap-5">
         <li>
-          <a href="/financial">
+          <router-link to="/uploadpage">
             <div
-              class="flex flex-row items-center gap-2 rounded-lg border cursor-pointer border-background hover:border hover:border-buttonColor shadow-md py-4 px-3 transition-all ease-in-out"
+              @click="toggleStyles('upload')"
+              :class="{
+                'bg-buttonColor shadow-md py-4 px-3': activeTab === 'upload',
+                'border cursor-pointer border-background hover:border hover:border-buttonColor shadow-md py-4 px-3 transition-all ease-in-out':
+                  activeTab !== 'upload'
+              }"
+              class="flex flex-row items-center gap-2 rounded-lg"
             >
-              <CIcon :icon="cilDollar" width="24" customClassName="icon" class="text-titleColor" />
-              <p>Financeiro</p>
-            </div></a
-          >
+              <CIcon
+                :icon="cilArrowThickToTop"
+                width="24"
+                customClassName="icon"
+                class="text-titleColor"
+              />
+              Tela de Upload
+            </div>
+          </router-link>
         </li>
         <li>
-          <div
-            class="flex flex-row items-center gap-2 rounded-lg bg-buttonColor shadow-md py-4 px-3"
-          >
-            <CIcon :icon="cilGroup" width="24" customClassName="icon" class="text-titleColor" />
-            <a>Status e Engajamento</a>
-          </div>
+          <router-link to="/socialstats">
+            <div
+              @click="toggleStyles('stats')"
+              :class="{
+                'bg-buttonColor shadow-md py-4 px-3': activeTab === 'stats',
+                'border cursor-pointer border-background hover:border hover:border-buttonColor shadow-md py-4 px-3 transition-all ease-in-out':
+                  activeTab !== 'stats'
+              }"
+              class="flex flex-row items-center gap-2 rounded-lg"
+            >
+              <CIcon :icon="cilGroup" width="24" customClassName="icon" class="text-titleColor" />
+              Status e Engajamento
+            </div>
+          </router-link>
         </li>
       </ul>
     </div>
   </nav>
 </template>
+
 <script lang="ts">
 import { CIcon } from '@coreui/icons-vue'
-import { cilDollar, cilGroup } from '@coreui/icons'
+import { cilArrowThickToTop, cilGroup } from '@coreui/icons'
 
 export default {
   name: 'NavBar',
@@ -35,8 +55,14 @@ export default {
   },
   data() {
     return {
-      cilDollar,
-      cilGroup
+      cilArrowThickToTop,
+      cilGroup,
+      activeTab: 'upload'
+    }
+  },
+  methods: {
+    toggleStyles(tab: any) {
+      this.activeTab = this.activeTab === tab ? null : tab
     }
   }
 }

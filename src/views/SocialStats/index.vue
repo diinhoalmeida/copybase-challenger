@@ -11,23 +11,48 @@
       </div>
     </div>
     <div class="mt-10 flex flex-col">
-      <h2 de Linha2 class="text-titleXS text-titleColor">
-        Gráfico de Linha para Churn Rate ao longo do tempo.
+      <h2 class="text-titleXS text-titleColor">
+        Gráfico de Linha para status Ativo ao longo dos meses
       </h2>
       <div class="flex flex-col max-w-[50em]">
-        <!-- <Line :data="lineChartData" :options="options" /> -->
+        <Line :data="dataCountStatusActive" :options="options" />
       </div>
     </div>
     <div class="mt-10 flex flex-col">
-      <h2 de Linha2 class="text-titleXS text-titleColor">
-        Gráfico de Barras para Quantidade de Cobranças por Período de Tempo.
+      <h2 class="text-titleXS text-titleColor">
+        Gráfico de Linha para status Cancelado ao longo dos meses
       </h2>
       <div class="flex flex-col max-w-[50em]">
-        <!-- <Bar :data="lineChartData" :options="options" /> -->
+        <Line :data="dataCountStatusCanceled" :options="options" />
+      </div>
+    </div>
+    <div class="mt-10 flex flex-col">
+      <h2 class="text-titleXS text-titleColor">
+        Gráfico de Linha para status Trios Cancelado ao longo dos meses
+      </h2>
+      <div class="flex flex-col max-w-[50em]">
+        <Line :data="dataCountStatusTrialCanceled" :options="options" />
+      </div>
+    </div>
+    <div class="mt-10 flex flex-col">
+      <h2 class="text-titleXS text-titleColor">
+        Gráfico de Linha para status Upgrade ao longo dos meses
+      </h2>
+      <div class="flex flex-col max-w-[50em]">
+        <Line :data="dataCountStatusUpgrade" :options="options" />
+      </div>
+    </div>
+    <div class="mt-10 flex flex-col">
+      <h2 class="text-titleXS text-titleColor">
+        Gráfico de Linha para status Atrasado ao longo dos meses
+      </h2>
+      <div class="flex flex-col max-w-[50em]">
+        <Line :data="dataCountStatusDelayed" :options="options" />
       </div>
     </div>
   </header>
 </template>
+
 <script lang="ts">
 import {
   Chart as ChartJS,
@@ -37,13 +62,10 @@ import {
   LineElement,
   BarElement,
   Title,
-  ArcElement,
   Tooltip,
-  Legend
+  Legend,
+  ArcElement
 } from 'chart.js'
-import { Line, Bar, Pie } from 'vue-chartjs'
-import * as chartConfig from './chartConfig.js'
-import api from '@/config/axios-instance'
 
 ChartJS.register(
   CategoryScale,
@@ -52,78 +74,132 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
+  ArcElement,
   BarElement,
-  Legend,
-  ArcElement
+  Legend
 )
+import { Line, Bar, Pie } from 'vue-chartjs'
+import api from '@/config/axios-instance'
 
 export default {
   name: 'SocialStats',
-  components: {
-    Line,
-    Bar,
-    Pie
-  },
+  components: { Line, Bar, Pie },
   data() {
     return {
-      options: {
-        responsive: true,
-        maintainAspectRatio: true
-      },
-      data: {
-        labels: [
-          'Janeiro',
-          'Fevereiro',
-          'Março',
-          'Abril',
-          'Maio',
-          'Junho',
-          'Julho',
-          'Agosto',
-          'Setembro',
-          'Outubro',
-          'Novembro',
-          'Dezembro'
-        ],
-        datasets: [
-          {
-            label: 'Data One',
-            backgroundColor: '#f87979',
-            data: [40, 39, 10, 40, 39, 100, 40]
-          }
-        ]
-      },
-      statusCounts: []
+      options: { responsive: true, maintainAspectRatio: true },
+      data: { labels: [], datasets: [] },
+      dataCountStatusActive: { labels: [], datasets: [] },
+      dataCountStatusCanceled: { labels: [], datasets: [] },
+      dataCountStatusDelayed: { labels: [], datasets: [] },
+      dataCountStatusUpgrade: { labels: [], datasets: [] },
+      dataCountStatusTrialCanceled: { labels: [], datasets: [] },
+      statusCounts: [],
+      statusByMonths: [],
+      labels: [
+        'Janeiro',
+        'Fevereiro',
+        'Março',
+        'Abril',
+        'Maio',
+        'Junho',
+        'Julho',
+        'Agosto',
+        'Setembro',
+        'Outubro',
+        'Novembro',
+        'Dezembro'
+      ]
     }
   },
   async mounted() {
-    await api
-      .get('/getfiledata')
-      .then((response) => {
-        this.statusCounts = response.data.data.statusCounts
-        const mappedStatusCounts = {
-          Ativo: this.statusCounts.active,
-          Atrasado: this.statusCounts.delayed,
-          Cancelado: this.statusCounts.canceled,
-          'Trial cancelado': this.statusCounts.trialCanceled,
-          Upgrade: this.statusCounts.upgrade
-        }
+    try {
+      const response = await api.get('/getfiledata')
+      this.statusCounts = response.data.data.statusCounts
+      this.statusByMonths = response.data.data.statusByMonths
 
-        // Crie um array de dados com base nos rótulos mapeados
-        this.data = {
-          labels: Object.keys(mappedStatusCounts),
-          datasets: [
-            {
-              label: 'Status',
-              backgroundColor: ['#f87979', '#ffcc66', '#999999', '#66ccff', '#cc99ff'],
-              data: Object.values(mappedStatusCounts)
-            }
-          ]
-        }
-      })
-      .catch((error) => {
-        console.error('Erro ao obter dados da API', error)
-      })
+      const activeArray = this.getStatusArray('active')
+      const canceledArray = this.getStatusArray('canceled')
+      const delayedArray = this.getStatusArray('delayed')
+      const upgradeArray = this.getStatusArray('upgrade')
+      const trialCanceledArray = this.getStatusArray('trialCanceled')
+
+      this.dataCountStatusActive = {
+        labels: this.labels,
+        datasets: [
+          {
+            label: 'Ativos',
+            backgroundColor: '#BDFE68',
+            data: activeArray
+          }
+        ]
+      }
+      this.dataCountStatusCanceled = {
+        labels: this.labels,
+        datasets: [
+          {
+            label: 'Cancelados',
+            backgroundColor: '#f10c49',
+            data: canceledArray
+          }
+        ]
+      }
+      this.dataCountStatusDelayed = {
+        labels: this.labels,
+        datasets: [
+          {
+            label: 'Atrasados',
+            backgroundColor: '#f6d86b',
+            data: delayedArray
+          }
+        ]
+      }
+      this.dataCountStatusUpgrade = {
+        labels: this.labels,
+        datasets: [
+          {
+            label: 'Upgrade',
+            backgroundColor: '#339194',
+            data: upgradeArray
+          }
+        ]
+      }
+      this.dataCountStatusTrialCanceled = {
+        labels: this.labels,
+        datasets: [
+          {
+            label: 'Trials Cancelados',
+            backgroundColor: '#a70267',
+            data: trialCanceledArray
+          }
+        ]
+      }
+
+      const mappedStatusCounts = {
+        Ativo: this.statusCounts.active,
+        Atrasado: this.statusCounts.delayed,
+        Cancelado: this.statusCounts.canceled,
+        'Trial cancelado': this.statusCounts.trialCanceled,
+        Upgrade: this.statusCounts.upgrade
+      }
+
+      this.data = {
+        labels: Object.keys(mappedStatusCounts),
+        datasets: [
+          {
+            label: 'Status',
+            backgroundColor: ['#BDFE68', '#f6d86b', '#f10c49', '#a70267', '#339194'],
+            data: Object.values(mappedStatusCounts)
+          }
+        ]
+      }
+    } catch (error) {
+      console.error('Erro ao obter dados da API', error)
+    }
+  },
+  methods: {
+    getStatusArray(statusKey) {
+      return Object.values(this.statusByMonths).map((monthData) => monthData[statusKey] || 0)
+    }
   }
 }
 </script>

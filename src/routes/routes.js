@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import LoginPage from '../views/Login/index.vue'
-import FinancialPage from '../views/Financial/index.vue'
+import UploadPage from '../views/UploadPage/index.vue'
 import HomePageLayout from '../layouts/HomePageLayout.vue'
 import SocialStats from '../views/SocialStats/index.vue'
 
@@ -15,9 +15,9 @@ const routes = [
     component: HomePageLayout,
     children: [
       {
-        path: '/financial',
-        name: 'Financial',
-        component: FinancialPage
+        path: '/uploadpage',
+        name: 'UploadPage',
+        component: UploadPage
       },
       {
         path: '/socialstats',
